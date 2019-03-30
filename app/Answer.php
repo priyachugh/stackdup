@@ -16,6 +16,11 @@ class Answer extends Model
     	return $this->belongsTo(User::class);
     }
 
+    public function getCreatedDateAttribute()
+    {
+        return $this->created_at->diffForHumans();
+    }
+
     public static function boot() {
 	    	parent::boot();
 	    	static::created(function($answer) {
