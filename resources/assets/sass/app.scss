@@ -8,6 +8,10 @@
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
+//fontawesome
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+
+
 .navbar-laravel {
 	background-color: #fff;
 	box-shadow: 0 2px 4px rgba(0,0,0,0.04);  
@@ -52,4 +56,43 @@
 }
 form.form-delete {
 	display: inline;
+}
+
+.vote-controls {
+	min-width: 60px;
+	
+	span, a {
+		display: block; 
+		color: grey;
+	}	
+
+	span {
+		&.votes-count {
+			font-size: 25px;
+		}
+
+		&.favorites-count {
+			font-size: 12px;
+	 	}
+	}
+
+	a {
+		cursor: pointer;
+		color: $gray;
+
+		&.off, &.off:hover {
+			color: $gray-lighter;
+		}
+
+		&.favorite {
+			&.favorited, &.favorited:hover {
+				color: $brand-warning;
+			}
+		}
+
+		&.vote-accepted {
+			color: $brand-success;
+		}
+		
+	}
 }
