@@ -10,22 +10,22 @@
                 <hr>
                 @include ('layouts._messages')
                 <div class="media">
-                    <div class="d-flex flex-column vote-controls">
-                        <a title="this answer is useful" class="vote-up">
-                            <i class="fas fa-caret-up fa-2x"></i>
-                        </a>
-                        <span class="votes-count">1230</span>
-                        <a title="this answer is not useful" class="vote-down off">
-                            <i class="fas fa-caret-down fa-2x"></i>
-                        </a>
-                        <a title="mark this answer as favorite answer" class="vote-accepted mt-2">
-                            <i class="fas fa-check fa-lg"></i>
-                        </a>
-                        <span class="favorites-count ">123</span>
-                    </div>
-                    <div class="media-body">
-                        @foreach($answers as $answer)
-                        {{ $answer->body }} 
+                     @foreach($answers as $answer)
+                        <div class="d-flex flex-column vote-controls">
+                            <a title="this answer is useful" class="vote-up">
+                                <i class="fas fa-caret-up fa-2x"></i>
+                            </a>
+                            <span class="votes-count">1230</span>
+                            <a title="this answer is not useful" class="vote-down off">
+                                <i class="fas fa-caret-down fa-2x"></i>
+                            </a>
+                            <a title="mark this answer as favorite answer" class="{{ $answer->status }}mt-2">
+                                <i class="fas fa-check fa-lg"></i>
+                            </a>
+                            <span class="favorites-count ">123</span>
+                        </div>
+                            <div class="media-body">
+                                {{ $answer->body }} 
                             <div class="row">
                                 <div class="col-4">
                                     <div class="ml-auto">
