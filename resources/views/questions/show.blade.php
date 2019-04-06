@@ -16,13 +16,28 @@
                     </div>
                     <div class="media">
                         <div class="d-flex flex-column vote-controls">
-                            <a title="this question is useful" class="vote-up">
+                            
+                            <a title="this question is useful" 
+                            class="vote-up {{ Auth::guest() ? 'off' : '' }}"
+                            onclick="event.preventDefault(); document.getElementById('up-vote-question-{{ $question->id }}').submit();">
                                 <i class="fas fa-caret-up fa-2x"></i>
-                            </a>
-                            <span class="votes-count">1230</span>
-                            <a title="this question is not useful" class="vote-down off">
+                            </a> 
+                            <form id="up-vote-question-{{ $question->id }}" method="POST" action="/questions/{{ $question->id}}/vote" style="display: none;">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="vote" value="1">
+                            </form>
+                            <span class="votes-count">{{ $question->votes_count }}</span>
+                            <a title="this question is not useful" 
+                            class="vote-down {{ Auth::guest() ? 'off' : ''}}"
+                            onclick="event.preventDefault(); document.getElementById('down-vote-question-{{ $question->id }}').submit();">
                                 <i class="fas fa-caret-down fa-2x"></i>
                             </a>
+                            <form id="down-vote-question-{{ $question->id }}" method="POST" action="/questions/{{ $question->id}}/vote" style="display: none;">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="vote" value="-1">
+                            </form>
+
+                            
                             <a title="Click to mark as favorite question(click again to undo)" class="favorite mt-2 {{ Auth::guest() ? 'off' : ($question->is_favorited ? 'favorited': '') }} "  onclick="event.preventDefault(); document.getElementById('favorite-question-{{ $question->id }}').submit();">
                                 <i class="fas fa-star fa-lg"></i>
                             </a>

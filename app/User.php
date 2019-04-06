@@ -41,6 +41,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Answer::class);
     }
+
     public function getAvatarAttribute() {
         $email = $this->email;
         $size = 32;
@@ -51,4 +52,34 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Question::class, 'favorites')->withTimestamps();
     }
+
+    public function voteQuestions() 
+    {
+        return $this->morphedByMany(Question::class, 'votable');
+    }
+
+     public function voteAnswers() 
+    {
+        return $this->morphedByMany(Answer::class, 'votable');
+    }
+
+    public function voteQuestion(Question $question, $vote)
+    {
+        $voteQuestions = $this->voteQuestions();
+        //dd($voteQuestions);
+        if($voteQuestions->where('votable_id', $question->id)->exists()) {
+           $voteQuestions->updateExistingPivot($question->id, ['vote' => $vote]);
+           //dd($vote);
+        }
+        else {
+            $voteQuestions->attach($question, ['vote' => $vote]); 
+        }
+
+        $question->load('votes');
+        $upVotes = (int) $question->upVotes()->sum('vote');
+        $downVotes = (int) $question->downVotes()->sum('vote');  
+        $question->votes_count = $upVotes + $downVotes;
+        $question->save();  
+    }
 }
+ 
